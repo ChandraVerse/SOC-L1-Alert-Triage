@@ -31,3 +31,15 @@ Based on the room’s triage flow, the lab followed this end-to-end sequence:
 6. Decide whether to escalate to L2; if not, document findings, then move the alert to Closed.
 
 ---
+
+## 🧾 Evidence captured
+- The SOC dashboard showed 5 alerts, and the most recent alert name observed was Double-Extension File Creation.
+- During prioritization, the first selected high-priority alert moved to **In Progress** was Potential Data Exfiltration.  
+- Example classification confirmed in the lab: Unusual VPN Login Location was marked False Positive, with the user field showing M.Clark in the alert context.  
+- Lab completion screen confirms successful finish of the room with points/tasks completed.
+
+---
+
+## 🚀 Next steps
+- Convert the “Final comment” step into a reusable comment template (what happened, why it’s TP/FP, evidence, scope, recommended action).  
+- Continue with TryHackMe’s follow-up room SOC L1 Alert Reporting to practice escalation + communication quality.
