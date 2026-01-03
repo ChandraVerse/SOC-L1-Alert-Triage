@@ -1,0 +1,130 @@
+# 🛡️ SOC L1 Alert Triage (TryHackMe) — Analyst Report
+
+Lab/Room: SOC L1 Alert Triage (TryHackMe) 
+Track: SOC Level 1 / SOC Team Internals  
+Outcome: Successfully completed triage workflow and validated alerts with correct flags.
+
+This report documents the alert-triage process performed in a simulated SOC dashboard (TryHackMe SIEM) to build L1 operational habits: prioritization, ownership, investigation, verdicting, documentation, and closure.
+
+---
+
+## 🎯 Objectives & Scope
+
+### Learning objectives (room-aligned)
+- Understand what a SOC alert is and how alerts originate from events/logs.
+- Learn alert properties (status, severity, verdict, assignee, fields) and how they affect operations.
+- Perform L1 triage end-to-end: prioritize → assign → investigate → verdict → close/escalate.
+- Practice with “realistic” SOC workflows used in SIEM/EDR environments.
+
+### Prerequisites
+- Familiarity with common attacks across networks/Windows/Linux and basic SOC duties.
+
+---
+
+## 🧰 SOC Tooling Context (as introduced in the lab)
+
+The room positions alert handling within typical SOC tooling categories (high-level): [page:1][file:46]
+- SIEM (examples: Splunk ES, Elastic): central alerting + log investigation.
+- EDR/NDR (examples: Microsoft Defender, CrowdStrike): endpoint/network detection views.
+- SOAR (examples: Splunk SOAR, Cortex SOAR): orchestration/automation for larger SOCs.
+- ITSM/Ticketing (examples: Jira, TheHive): case/ticket workflow and tracking.
+
+---
+
+## 🧾 Environment & Starting Observations
+
+### SOC dashboard snapshot (initial)
+- Total alerts visible in dashboard: 5.
+- Most recent alert name: **Double-Extension File Creation**.
+
+These checks confirm visibility, queue size, and recency before triage begins (important for operational awareness).
+
+---
+
+## 📌 Alert Model & Key Fields (what L1 must read first)
+
+The lab emphasizes consistently reviewing these properties before deep investigation:
+- Time: When the alert was created (often delayed vs event time).
+- Name: Detection-rule summary of suspected behavior.
+- Severity: Urgency/impact score (often set by detection engineering).
+- Status: Indicates whether an alert is being worked (ex: In Progress) or done (Closed).
+- Verdict (Classification): True Positive / False Positive decision.
+- **Assignee:** Ownership of investigation. [page:1][file:47]
+- **Description:** Context + what detection logic expects. [page:1]
+- **Alert Fields:** Evidence/indicators such as host, user, IP, command line. [page:1][file:49]
+
+---
+
+## 🔎 Prioritization Logic Used (L1 Queue Handling)
+
+The room’s recommended prioritization model: [page:1][file:43]
+1. **Filter alerts**: only take new/unseen/unassigned alerts. [page:1]
+2. **Sort by severity**: critical → high → medium → low. [page:1]
+3. **Sort by time**: start with **oldest** first (older threats may already be causing damage). [page:1]
+
+Validation questions in the lab reflected these rules:
+- Prioritize **medium over low**? → **Yea**. [file:43]
+- Take **newest first** then older? → **Nay**. [file:43]
+
+---
+
+## 🔁 SOC L1 Triage Workflow (Executed)
+
+The lab provides a structured triage flow which mirrors common SOC operations: [file:47][page:1]
+
+### Initial actions (ownership & readiness)
+- Select the first priority alert from the queue. [file:47]
+- **Assign the alert to yourself** (avoid duplicate effort across analysts). [file:47][page:1]
+- Move alert status to **In Progress**. [file:47][page:1]
+- Read alert name + description, and capture key indicators (host/user/IP). [file:47][page:1]
+
+### Investigation (decision-making stage)
+If a workbook/playbook exists, follow it; if not, investigate directly in SIEM/EDR logs. [page:1][file:47]  
+Key investigation guidance emphasized in the room: [page:1]
+- Identify **who/what is under threat** (affected user/host/service/cloud).  
+- Understand **the action** (login anomaly, malware behavior, phishing indicator, etc.).  
+- Review **surrounding events** before/after alert time.  
+- Use threat intel or other resources to verify assumptions when needed.
+
+### Final actions (resolution)
+- Decide verdict: **True Positive** (real threat) or **False Positive** (benign/noise). [page:1]
+- Write a concise, evidence-based analyst comment (reasoning + key pivots). [page:1]
+- Close the alert (**Closed**) or escalate to L2 if required. [file:47][page:1]
+
+---
+
+## 🧪 Lab Tasks Completed (Evidence)
+
+### Task: Select first-priority alert + set In Progress
+- First-priority alert selected and set to In Progress: **Potential Data Exfiltration**. [file:43]
+
+This step validated correct prioritization and proper alert ownership workflow. [page:1]
+
+### Task: Verify verdict + entity from an example alert
+- “Unusual VPN Login Location” verdict: **False Positive**. [file:48]
+- User mentioned in that alert: **M.Clark**. [file:48]
+
+This confirms correct reading of alert fields and classification mapping. [page:1][file:49]
+
+### Task: Correctly triage alerts (flags received)
+Flags shown as successfully validated after triaging priority alerts: [file:49]
+- First-priority flag: `THM{looks_like_lots_of_zoom_meetings}` [file:49]
+- Second-priority flag: `THM{how_could_this_user_fall_for_it?}` [file:49]
+- Third-priority flag: `THM{should_we_allow_github_for_devs?}` [file:49]
+
+### Completion proof
+Room completion screen shows successful completion with earned points and completed tasks. [file:45]
+
+---
+
+## 🧾 Analyst Notes (How this maps to real SOC work)
+
+- **Status hygiene** (*In Progress* → *Closed*) prevents duplicate investigations and establishes accountability. [page:1][file:47]
+- **Prioritization discipline** (severity + age) is essential when queues are large and time-to-detect matters. [page:1][file:43]
+- **Verdict quality** depends on evidence: alert fields, surrounding events, and validating assumptions (not intuition). [page:1]
+- **Escalation readiness**: L1 is expected to escalate when confidence indicates real threat or when deeper remediation is needed. [page:1][file:47]
+
+---
+
+## 📂 Suggested Repo Structure (GitHub-friendly)
+
